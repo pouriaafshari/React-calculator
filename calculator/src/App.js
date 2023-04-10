@@ -30,12 +30,23 @@ function reducer(state, {type, payload})
       return {} 
     
     case ACTIONS.CHOOSE_OPERATION:
-      return {...state, previousNum: state.currentNum, currentNum: "", operation: payload.operation}
+      if (state.currentNum == null)
+      {
+        return {...state, operation: payload.operation}
+      }
+      if (state.previousNum == null)
+      {
+        return {...state, previousNum: state.currentNum, currentNum: "", operation: payload.operation}
+      }
+      return {...state, previousNum: state.currentNum, currentNum: evaluate(state.currentNum, state.previousNum, payload.operation)}
+
     
     case ACTIONS.EVALUATE:
-      return {...state, currentNum: payload.operation}
-      return {...state, previousNum: state.currentNum, currentNum: evaluate(state.currentNum, state.previousNum, payload.operation)}
-      
+      return {...state, previousNum: state.currentNum, currentNum: evaluate(state.currentNum, state.previousNum, state.operation)}
+    
+    case ACTIONS.DEL_DIGIT:
+      return {...state, currentNum: ""}
+
     default:
       break;
   }
@@ -45,23 +56,28 @@ function evaluate(currentNum, previousNum, operation)
 {
   const A = parseFloat(currentNum)
   const B = parseFloat(previousNum)
-  let ans = ""
+  var ans = ""
 
   if (isNaN(A) || isNaN(B)) { return ans }
 
   switch(operation)
   {
     case "+":
-      return toString(ans = A + B)
+      ans = A + B
+      return ans.toString()
     
     case "-":
-      return toString(ans = A - B)
+      ans = A - B
+      return ans.toString()
     
     case "*":
-      return toString(ans = A * B)
+      ans = A * B
+      return ans.toString()
 
     case "/":
-      return toString(ans = A / B)
+      ans = A / B
+      return ans.toString()
+
     default:
       return ans
   }
@@ -80,7 +96,8 @@ function App()
       </div>
 
       <button className="span-two" onClick={() => {dispatch({ type: ACTIONS.CLEAR })} }>AC</button>
-      <button>DEL</button>
+      <button onClick={() => dispatch({ type: ACTIONS.DEL_DIGIT })}>DEL</button>
+
       <button onClick={() => dispatch({type: ACTIONS.CHOOSE_OPERATION, payload: { operation: "/" } })}> / </button>
 
       <button onClick={() => dispatch({type: ACTIONS.ADD_DIGIT, payload: { digit: "1" } })}> 1 </button>
