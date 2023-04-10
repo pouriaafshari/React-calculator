@@ -3,12 +3,15 @@ body
   margin: 0;
   padding: 0;
   border: 0;
-
-  background: linear-gradient(to right, #9ce6f0, #b6ff9d);
 }
 
+.output .cur-operand
+{
+  background-color: red;
+}
 .calculator-grid
 {
+  justify-content: center;
   display: grid;
   margin-top: 2rem;
 
