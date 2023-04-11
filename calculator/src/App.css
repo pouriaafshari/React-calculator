@@ -3,32 +3,55 @@ body
   margin: 0;
   padding: 0;
   border: 0;
+  
+  color: #FDEBED;
+  text-align: right;
 
-  font-family: pixel;
-  color: #4C4B16;
-  background-color: #F7F1E5;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-size: 300% 200%;
+  background-image: linear-gradient(-45deg, #c972ff 0%, #99fffd 100%);
+  -webkit-animation: AnimateBG 5s ease infinite;
+  animation: AnimateBG 5s ease infinite;
 }
+@-webkit-keyframes AnimateBG {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+@keyframes AnimateBG {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
 @font-face {
   font-family: pixel;
   src: url("./minecraftia/Minecraftia-Regular.ttf");
 }
-button{
-  background-color: #2a2a2a;
-  border-color: #bbbbbb;
-  border-width: 5px;
-}
-.output .cur-operand
-{
-
-}
 .calculator-grid
 {
-  justify-content: center;
   display: grid;
-  margin-top: 2rem;
+  width: fit-content;
+  margin-top: 5em;
 
-  grid-template-columns: repeat(4, 6rem);
-  grid-template-rows: minmax(7rem, auto) repeat(5, 6rem);
+  grid-template-columns: repeat(4, 6em);
+  grid-template-rows: minmax(7rem, auto) repeat(6, 6em);
 }
 .span-two
 {
@@ -37,5 +60,20 @@ button{
 .output
 {
   grid-column: 1 / -1;
-  background-color: #898121;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: space-around;
+  padding: 0.75em;
+  background-color: #3f3f3f74;
+  word-wrap: break-word;
+  word-break: break-all;
+}
+.output .pre-operand
+{
+  font-size: 1.5em;
+}
+.output .cur-operand
+{
+  font-size: 2.5em;
 }
