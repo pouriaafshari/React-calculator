@@ -4,6 +4,7 @@ body
   padding: 0;
   border: 0;
   
+  font-family: cute;
   color: #FDEBED;
   text-align: right;
 
@@ -41,8 +42,8 @@ body
 }
 
 @font-face {
-  font-family: pixel;
-  src: url("./minecraftia/Minecraftia-Regular.ttf");
+  font-family: cute;
+  src: url("./quirlycues/Quirlycues.ttf");
 }
 .calculator-grid
 {
@@ -52,6 +53,18 @@ body
 
   grid-template-columns: repeat(4, 6em);
   grid-template-rows: minmax(7rem, auto) repeat(6, 6em);
+}
+button
+{
+  border: none;
+  font-family: cute;
+  font-size: 2em;
+  color: #4b354bbc;
+}
+.HB
+{
+  border: none;
+  color: #4b354bbc;
 }
 .span-two
 {
@@ -65,7 +78,7 @@ body
   align-items: flex-end;
   justify-content: space-around;
   padding: 0.75em;
-  background-color: #3f3f3f74;
+  background-color: #31233120;
   word-wrap: break-word;
   word-break: break-all;
 }

@@ -1,7 +1,8 @@
+import HighlightButton from "./HighlightButton"
 import { useReducer } from "react"
 import "./App.css"
 
-const ACTIONS = 
+export const ACTIONS = 
 {
   CHOOSE_OPERATION : "choose-operation",
   ADD_DIGIT : "add-digit",
@@ -13,42 +14,85 @@ const ACTIONS =
 
 function reducer(state, {type, payload})
 {  
-  switch (type) 
-  {
+  switch (type) {
     case ACTIONS.ADD_DIGIT:
-      if (payload.digit === "0" && state.currentNum === "0") 
-      {
+      if (state.overwrite) {
+        return {
+          ...state,
+          currentNum: payload.digit,
+          overwrite: false,
+        }
+      }
+      if (payload.digit === "0" && state.currentNum === "0") {
         return state
       }
-      if (payload.digit === "." && state.currentNum.includes(".")) 
-      {
+      if (payload.digit === "." && state.currentNum.includes(".")) {
         return state
       }
-      return {...state, currentNum: `${state.currentNum || ""}${payload.digit}`}
-  
-    case ACTIONS.CLEAR:
-      return {} 
-    
+
+      return {
+        ...state,
+        currentNum: `${state.currentNum || ""}${payload.digit}`,
+      }
     case ACTIONS.CHOOSE_OPERATION:
-      if (state.currentNum == null)
-      {
-        return {...state, operation: payload.operation}
+      if (state.currentNum == null && state.previousNum == null) {
+        return state
       }
-      if (state.previousNum == null)
-      {
-        return {...state, previousNum: state.currentNum, currentNum: "", operation: payload.operation}
-      }
-      return {...state, previousNum: state.currentNum, currentNum: evaluate(state.currentNum, state.previousNum, payload.operation)}
 
-    
-    case ACTIONS.EVALUATE:
-      return {...state, previousNum: state.currentNum, currentNum: evaluate(state.currentNum, state.previousNum, state.operation)}
-    
+      if (state.currentNum == null) {
+        return {
+          ...state,
+          operation: payload.operation,
+        }
+      }
+
+      if (state.previousNum == null) {
+        return {
+          ...state,
+          operation: payload.operation,
+          previousNum: state.currentNum,
+          currentNum: null,
+        }
+      }
+
+      return {
+        ...state,
+        previousNum: evaluate(state),
+        operation: payload.operation,
+        currentNum: null,
+      }
+    case ACTIONS.CLEAR:
+      return {}
     case ACTIONS.DEL_DIGIT:
-      return {...state, currentNum: ""}
+      if (state.overwrite) {
+        return {
+          ...state,
+          overwrite: false,
+          currentNum: null,
+        }
+      }
+      if (state.currentNum == null) return state
+      if (state.currentNum.length === 1) {
+        return { ...state, currentNum: null }
+      }
 
-    default:
-      break;
+      return {
+        ...state,
+        currentNum: state.currentNum.slice(0, -1),
+      }
+    case ACTIONS.EVALUATE:
+      if (
+        state.operation == null ||
+        state.currentNum == null ||
+        state.previousNum == null
+      ) {
+        return state
+      }
+
+      return {
+        ...state,
+        currentNum: evaluate(state.currentNum, state.previousNum, state.operation),
+      }
   }
 }
 
@@ -100,26 +144,26 @@ function App()
 
       <button onClick={() => dispatch({type: ACTIONS.CHOOSE_OPERATION, payload: { operation: "/" } })}> / </button>
 
-      <button onClick={() => dispatch({type: ACTIONS.ADD_DIGIT, payload: { digit: "1" } })}> 1 </button>
-      <button onClick={() => dispatch({type: ACTIONS.ADD_DIGIT, payload: { digit: "2" } })}> 2 </button>
-      <button onClick={() => dispatch({type: ACTIONS.ADD_DIGIT, payload: { digit: "3" } })}> 3 </button>
+      <HighlightButton digit="1" dispatch={dispatch}/>
+      <HighlightButton digit="2" dispatch={dispatch}/>
+      <HighlightButton digit="3" dispatch={dispatch}/>
 
       <button onClick={() => dispatch({type: ACTIONS.CHOOSE_OPERATION, payload: { operation: "*" } })}> * </button>
 
-      <button onClick={() => dispatch({type: ACTIONS.ADD_DIGIT, payload: { digit: "4" } })}> 4 </button>
-      <button onClick={() => dispatch({type: ACTIONS.ADD_DIGIT, payload: { digit: "5" } })}> 5 </button>
-      <button onClick={() => dispatch({type: ACTIONS.ADD_DIGIT, payload: { digit: "6" } })}> 6 </button>
+      <HighlightButton digit="4" dispatch={dispatch}/>
+      <HighlightButton digit="5" dispatch={dispatch}/>
+      <HighlightButton digit="6" dispatch={dispatch}/>
 
       <button onClick={() => dispatch({type: ACTIONS.CHOOSE_OPERATION, payload: { operation: "+" } })}> + </button>
 
-      <button onClick={() => dispatch({type: ACTIONS.ADD_DIGIT, payload: { digit: "7" } })}> 7 </button>
-      <button onClick={() => dispatch({type: ACTIONS.ADD_DIGIT, payload: { digit: "8" } })}> 8 </button>
-      <button onClick={() => dispatch({type: ACTIONS.ADD_DIGIT, payload: { digit: "9" } })}> 9 </button>
+      <HighlightButton digit="7" dispatch={dispatch}/>
+      <HighlightButton digit="8" dispatch={dispatch}/>
+      <HighlightButton digit="9" dispatch={dispatch}/>
 
       <button onClick={() => dispatch({type: ACTIONS.CHOOSE_OPERATION, payload: { operation: "-" } })}> - </button>
 
-      <button onClick={() => dispatch({type: ACTIONS.ADD_DIGIT, payload: { digit: "." } })}> . </button>
-      <button onClick={() => dispatch({type: ACTIONS.ADD_DIGIT, payload: { digit: "0" } })}> 0 </button>
+      <HighlightButton digit="." dispatch={dispatch}/>
+      <HighlightButton digit="0" dispatch={dispatch}/>
       <button className="span-two" onClick={() => {dispatch({ type: ACTIONS.EVALUATE })}}>=</button>
 
     </div>
