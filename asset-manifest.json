@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/React-calculator/calculator/static/css/main.85c4cd8b.css",
+    "main.js": "/React-calculator/calculator/static/js/main.af73745a.js",
+    "static/media/Quirlycues.ttf": "/React-calculator/calculator/static/media/Quirlycues.f2d1e873b85b8567b40f.ttf",
+    "index.html": "/React-calculator/calculator/index.html",
+    "main.85c4cd8b.css.map": "/React-calculator/calculator/static/css/main.85c4cd8b.css.map",
+    "main.af73745a.js.map": "/React-calculator/calculator/static/js/main.af73745a.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.85c4cd8b.css",
+    "static/js/main.af73745a.js"
+  ]
+}
