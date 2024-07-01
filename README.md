@@ -21,9 +21,9 @@ Make sure you have the following software installed:
 - [Node.js](https://nodejs.org/) (LTS version recommended)
 - [npm](https://www.npmjs.com/) (comes with Node.js) or [Yarn](https://yarnpkg.com/)
 
-### Steps
+### Start the Project
 
-1. Clone the repository:
+Clone the repository and start:
 
    ```sh
    git clone https://github.com/pouriaafshari/React-calculator.git
