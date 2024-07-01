@@ -30,4 +30,3 @@ Make sure you have the following software installed:
    cd react-calculator
    npm install
    npm start
-   ```sh
