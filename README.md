@@ -28,6 +28,6 @@ Clone the repository and start:
    cd react-calculator
    npm install
    npm start
-
+   ```
 
 ![plot](./clc.png)
