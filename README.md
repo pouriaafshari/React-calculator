@@ -2,8 +2,6 @@
 
 **A calculator made by React with dynamic theme**
 
-![plot](./clc.png)
-
 ## Features
 
 - Basic arithmetic operations: addition, subtraction, multiplication, division
@@ -30,3 +28,6 @@ Clone the repository and start:
    cd react-calculator
    npm install
    npm start
+
+
+![plot](./clc.png)
